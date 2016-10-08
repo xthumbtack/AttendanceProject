@@ -158,21 +158,28 @@ public class SheetsQuickstart {
      	        .setRequests(requests);
      	service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequestNew)
      	        .execute();   
-     	// TEST -------------------------------------------------------------------------------------------------
+     	// TEST
 
-     	String range = "A2:E";
-        ValueRange response = service.spreadsheets().values()
-            .get(spreadsheetId, range)
-            .execute();
-        List<List<Object>> values = response.getValues();
-        if (values == null || values.size() == 0) {
-            System.out.println("No data found.");
-        } else {
-          for (List row : values) {
-            // Print columns A and E, which correspond to indices 0 and 4.
-            System.out.printf("%s, %s\n", row.get(0), row.get(3));
-          }
-        }
+        // Add string 6/21/2016 value
+        valuesNew.add(new CellData()
+                .setUserEnteredValue(new ExtendedValue()
+                        .setStringValue(("TEST"))));
+
+        // Prepare request with proper row and column and its value
+        requests.add(new Request()
+                .setUpdateCells(new UpdateCellsRequest()
+                        .setStart(new GridCoordinate()
+                                .setSheetId(0)
+                                .setRowIndex(2)     // set the row to row 1 
+                                .setColumnIndex(6)) // set the new column 6 to value "Y" at row 1
+                        		//
+                        .setRows(Arrays.asList(
+                                new RowData().setValues(valuesNew)))
+                        .setFields("userEnteredValue,userEnteredFormat.backgroundColor")));        
+        BatchUpdateSpreadsheetRequest batchUpdateRequestNew = new BatchUpdateSpreadsheetRequest()
+    	        .setRequests(requests);
+    	service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequestNew)
+    	        .execute(); 
     
     }
 }
