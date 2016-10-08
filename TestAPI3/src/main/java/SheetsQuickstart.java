@@ -71,7 +71,7 @@ public class SheetsQuickstart {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         // Place client_secret.json file location here
-        InputStream in = new FileInputStream("C:\\Users\\Rysom_000\\workspace\\TestAPI3\\src\\main\\resources\\client_secret.json");
+        InputStream in = new FileInputStream("src\\main\\resources\\client_secret.json");
             // SheetsQuickstart.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
@@ -164,13 +164,13 @@ public class SheetsQuickstart {
         ValueRange response = service.spreadsheets().values()
             .get(spreadsheetId, range)
             .execute();
-        List<List<Object>> values = response.getValues();
-        if (values == null || values.size() == 0) {
+        List<List<Object>> data = response.getValues();
+        if (data == null || data.size() == 0) {
             System.out.println("No data found.");
         } else {
-          for (List row : values) {
-            // Print columns A and E, which correspond to indices 0 and 4.
-            System.out.printf("%s, %s\n", row.get(0), row.get(3));
+          for (List row : data) {
+            // Print columns A, B, and E, which correspond to indices 0, 1, and 4.
+            System.out.printf("%-16s %-16s %s\n", row.get(0), row.get(1), row.get(3));
           }
         }
     
