@@ -158,6 +158,7 @@ public class SheetsQuickstart {
      	        .setRequests(requests);
      	service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequestNew)
      	        .execute();   
+<<<<<<< HEAD
      	// TEST -------------------------------------------------------------------------------------------------
 
      	String range = "A2:E";
@@ -173,6 +174,30 @@ public class SheetsQuickstart {
             System.out.printf("%-16s %-16s %s\n", row.get(0), row.get(1), row.get(3));
           }
         }
+=======
+     	// TEST
+
+        // Add string 6/21/2016 value
+        valuesNew.add(new CellData()
+                .setUserEnteredValue(new ExtendedValue()
+                        .setStringValue(("TEST"))));
+
+        // Prepare request with proper row and column and its value
+        requests.add(new Request()
+                .setUpdateCells(new UpdateCellsRequest()
+                        .setStart(new GridCoordinate()
+                                .setSheetId(0)
+                                .setRowIndex(2)     // set the row to row 1 
+                                .setColumnIndex(6)) // set the new column 6 to value "Y" at row 1
+                        		//
+                        .setRows(Arrays.asList(
+                                new RowData().setValues(valuesNew)))
+                        .setFields("userEnteredValue,userEnteredFormat.backgroundColor")));        
+        BatchUpdateSpreadsheetRequest batchUpdateRequestNew = new BatchUpdateSpreadsheetRequest()
+    	        .setRequests(requests);
+    	service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequestNew)
+    	        .execute(); 
+>>>>>>> origin/master
     
     }
 }
