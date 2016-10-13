@@ -103,6 +103,13 @@ public class SheetsQuickstart {
     }
 
     public static void main(String[] args) throws IOException {
+    	// temp variables for initializing student
+    	String firstName = "firstName";
+    	String lastName = "lastName";
+    	int SID = 0000;
+    	String password = "password";
+    	
+    	
         // Build a new authorized API client service.
         Sheets service = getSheetsService();
 
@@ -158,7 +165,7 @@ public class SheetsQuickstart {
      	        .setRequests(requests);
      	service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequestNew)
      	        .execute();   
-<<<<<<< HEAD
+
      	// TEST -------------------------------------------------------------------------------------------------
 
      	String range = "A2:E";
@@ -170,34 +177,21 @@ public class SheetsQuickstart {
             System.out.println("No data found.");
         } else {
           for (List row : data) {
-            // Print columns A, B, and E, which correspond to indices 0, 1, and 4.
-            System.out.printf("%-16s %-16s %s\n", row.get(0), row.get(1), row.get(3));
+        	  
+            // set the data for the student from the Google Sheet
+        	lastName = (String) row.get(0);
+        	firstName = (String) row.get(1);
+        	SID = Integer.parseInt((String) row.get(3));
+        	
+        	// Print out the current student's name and SID
+            System.out.printf("%-16s %-18s %d\n", lastName, firstName, SID);
+            
+            // Place the student info into a new student object
+            new Student(lastName, firstName, SID, "password");
           }
         }
-=======
+
      	// TEST
-
-        // Add string 6/21/2016 value
-        valuesNew.add(new CellData()
-                .setUserEnteredValue(new ExtendedValue()
-                        .setStringValue(("TEST"))));
-
-        // Prepare request with proper row and column and its value
-        requests.add(new Request()
-                .setUpdateCells(new UpdateCellsRequest()
-                        .setStart(new GridCoordinate()
-                                .setSheetId(0)
-                                .setRowIndex(2)     // set the row to row 1 
-                                .setColumnIndex(6)) // set the new column 6 to value "Y" at row 1
-                        		//
-                        .setRows(Arrays.asList(
-                                new RowData().setValues(valuesNew)))
-                        .setFields("userEnteredValue,userEnteredFormat.backgroundColor")));        
-        BatchUpdateSpreadsheetRequest batchUpdateRequestNew = new BatchUpdateSpreadsheetRequest()
-    	        .setRequests(requests);
-    	service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequestNew)
-    	        .execute(); 
->>>>>>> origin/master
     
     }
 }
